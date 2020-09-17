@@ -1,6 +1,9 @@
 import os
 import sys
 
+"""
+Function to print "nicely" the sudoku grid
+"""
 def print_grid(grid):
     for x in range(0,9):
         if x % 3 == 0 and x != 0:
@@ -13,8 +16,54 @@ def print_grid(grid):
             if y == 8:
                 print(grid[x][y])
             else:
-                print(grid[x][y] + " ",end="")
+                print(str(grid[x][y]) + " ",end="")
 
+"""
+Function to check if its possible to put an n number in an x,y position
+"""
+def possible(x,y,n,grid):
+    """
+    We check rows
+    """
+    for i in range(0,9):
+        if int(grid[i][y]) == n:
+            return False
+    
+    """
+    We check columns
+    """
+    for i in range(0,9):
+        if int(grid[x][i]) == n:
+            return False
+    
+    """
+    We check the box
+    """
+    x_square = (x // 3) * 3
+    y_square = (y // 3) * 3
+
+    for i in range(x_square,x_square + 3):
+        for j in range(y_square,y_square + 3):
+            if int(grid[i][j]) == n:
+                return False
+    
+    return True
+
+"""
+Function that solves the problem
+"""
+def solve(grid):
+    for x in range(0,9):
+        for y in range(0,9):
+            if int(grid[x][y]) == 0:
+                for n in range(1,10):
+                    if possible(x,y,n,grid):
+                        grid[x][y] = n
+                        solve(grid)
+                        grid[x][y] = 0
+                return
+    print("Finished!")
+    print_grid(grid)
 
 file = open(os.getcwd() + "/" + sys.argv[1])
 
@@ -24,6 +73,4 @@ for x in range(0,9):
     grid[x] = grid[x].split(" ")
 
 print_grid(grid)
-
-
-
+solve(grid)
