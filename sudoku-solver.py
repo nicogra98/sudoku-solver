@@ -72,12 +72,12 @@ def solve(grid):
     print_grid(grid)
 
 if __name__ == "__main__":
-file = open(os.getcwd() + "/" + sys.argv[1])
+    file = open(os.getcwd() + "/" + sys.argv[1])
 
-grid = file.read().split("\n")
+    grid = file.read().split("\n")
 
-for x in range(0,9):
-    grid[x] = grid[x].split(" ")
+    for x in range(0,9):
+        grid[x] = grid[x].split(" ")
 
-print_grid(grid)
-solve(grid)
+    print_grid(grid)
+    solve(grid)
