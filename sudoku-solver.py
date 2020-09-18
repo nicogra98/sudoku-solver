@@ -2,6 +2,12 @@ import os
 import sys
 
 """
+@Author Nicolas Granados
+Solves a sudoku problem given by a file
+ex: python sudoku-solver grid.txt
+"""
+
+"""
 Function to print "nicely" the sudoku grid
 """
 def print_grid(grid):
@@ -55,16 +61,17 @@ Function that solves the problem
 def solve(grid):
     for x in range(0,9):
         for y in range(0,9):
-            if int(grid[x][y]) == 0:
-                for n in range(1,10):
-                    if possible(x,y,n,grid):
-                        grid[x][y] = n
-                        solve(grid)
-                        grid[x][y] = 0
+            if int(grid[x][y]) == 0: #we check if its an empty space
+                for n in range(1,10): #we try every number possible
+                    if possible(x,y,n,grid): 
+                        grid[x][y] = n #if its possible then we put the number there
+                        solve(grid)#we keep solving
+                        grid[x][y] = 0 #we backtrack
                 return
     print("Finished!")
     print_grid(grid)
 
+if __name__ == "__main__":
 file = open(os.getcwd() + "/" + sys.argv[1])
 
 grid = file.read().split("\n")
